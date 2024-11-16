@@ -13,7 +13,7 @@ const getPolySynth = () => {
   const synthReverb = new Tone.Reverb({
     decay: 5,
     preDelay: 0.05,
-    wet: 0.1,
+    wet: 0.4,
   }).toDestination();
 
   const chorus = new Tone.Chorus({
@@ -94,14 +94,14 @@ const getPolySynth2 = () => {
 
   const synth = new Tone.PolySynth(Tone.Synth, {
     oscillator: {
-      type: "amsawtooth10",
+      type: "fmsine2",
     },
-    // envelope: {
-    //   attack: 0.01,
-    //   sustain: 0.2,
-    //   release: 0.1,
-    // },
-    volume: -8,
+    envelope: {
+      attack: 0.01,
+      sustain: 0.2,
+      release: 0.4,
+    },
+    volume: -6,
   }).connect(chorus);
 
   return synth;
