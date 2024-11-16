@@ -1,15 +1,6 @@
 import * as Tone from "tone";
 
-let polySynth: ReturnType<typeof getPolySynth> | null = null;
-export const loadSynth = () => {
-  if (!polySynth) {
-    polySynth = getPolySynth();
-  }
-
-  return polySynth;
-};
-
-const getPolySynth = () => {
+export const getHarmonySynth = () => {
   const synthReverb = new Tone.Reverb({
     decay: 5,
     preDelay: 0.05,
@@ -36,16 +27,7 @@ const getPolySynth = () => {
   return synth;
 };
 
-let drums: ReturnType<typeof getDrums> | null = null;
-export const loadDrums = () => {
-  if (!drums) {
-    drums = getDrums();
-  }
-
-  return drums;
-};
-
-const getDrums = (): Promise<Tone.Players> => {
+export const getDrums = (): Promise<Tone.Players> => {
   return new Promise((resolve) => {
     const drums = new Tone.Players({
       urls: {
@@ -71,16 +53,7 @@ const getDrums = (): Promise<Tone.Players> => {
   });
 };
 
-let polySynth2: ReturnType<typeof getPolySynth> | null = null;
-export const loadSynth2 = () => {
-  if (!polySynth2) {
-    polySynth2 = getPolySynth2();
-  }
-
-  return polySynth2;
-};
-
-const getPolySynth2 = () => {
+export const getMelodySynth = () => {
   const synthReverb = new Tone.Reverb({
     decay: 5,
     preDelay: 0.05,
@@ -105,4 +78,42 @@ const getPolySynth2 = () => {
   }).connect(chorus);
 
   return synth;
+};
+
+export const getBass = () => {
+  const bassFilter = new Tone.Filter({ frequency: 600, Q: 8 });
+  const bassEnvelope = new Tone.AmplitudeEnvelope({
+    attack: 0.01,
+    decay: 0.2,
+    sustain: 0,
+  });
+  const gain = new Tone.Gain(0.2);
+  const bass = new Tone.PulseOscillator("A2", 0.4)
+    .chain(bassFilter, bassEnvelope, gain, Tone.getDestination())
+    .start();
+
+  return { bass, bassEnvelope };
+};
+
+export const getKick = () => {
+  const kickGain = new Tone.Gain(0.1);
+  const kickEnvelope = new Tone.AmplitudeEnvelope({
+    attack: 0.01,
+    decay: 0.2,
+    sustain: 0,
+  });
+
+  const kick = new Tone.Oscillator("A2")
+    .chain(kickEnvelope, kickGain, Tone.getDestination())
+    .start();
+
+  const kickSnapEnv = new Tone.FrequencyEnvelope({
+    attack: 0.005,
+    decay: 0.01,
+    sustain: 0,
+    baseFrequency: "A2",
+    octaves: 2.7,
+  }).connect(kick.frequency);
+
+  return { kickSnapEnv, kickEnvelope };
 };
