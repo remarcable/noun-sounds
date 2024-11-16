@@ -13,6 +13,7 @@ export const getNounsByAddress = async (address: string) => {
   }
 
   const nouns = nfts.filter(
+    // @ts-expect-error Ignore for now
     (nft) => nft.token.address === NOUN_SMART_CONTRACT_ADDRESS
   );
 

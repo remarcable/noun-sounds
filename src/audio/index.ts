@@ -9,6 +9,6 @@ export const play = async () => {
   synth.triggerAttackRelease("C4", "16n");
 };
 
-if (typeof window !== "undefined") {
-  window.playSynth = play;
-}
+// if (typeof window !== "undefined") {
+//   window.playSynth = play;
+// }
