@@ -32,12 +32,10 @@ export const play = async (txValues: number[], address: string) => {
 
   playBassline(bass, kick);
   playHarmonies(harmonySynth);
-
   playMelody(melodySynth, txValues);
   playDrumBeat(drums);
 };
 
-// TODO: refactor to put instrument in extra file
 const playBassline = (
   { bass, bassEnvelope }: ReturnType<typeof getBass>,
   { kickSnapEnv, kickEnvelope }: ReturnType<typeof getKick>
@@ -121,7 +119,7 @@ const playDrumBeat = (drums: Awaited<ReturnType<typeof getDrums>>) => {
   loop.start(Tone.Time("8m").toSeconds());
 };
 
-type NestedMelodyArray = Array<string | null | NestedArray>;
+type NestedMelodyArray = Array<string | null | NestedMelodyArray>;
 const playMelody = (
   synth: ReturnType<typeof getMelodySynth>,
   txValues: number[]
@@ -149,15 +147,13 @@ const playMelody = (
     measure.push(null);
   }
 
-  console.log(measure);
+  console.log({ measure });
 
   const seq = new Tone.Sequence(
     (time, note) => {
       if (!note) {
         return;
       }
-
-      console.log({ note });
 
       synth.triggerAttackRelease(note, "16n", time, between(0.7, 0.9, random));
     },
