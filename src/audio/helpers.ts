@@ -53,13 +53,9 @@ export function mapTransactionsToMelodyWithLogScaling(
   minValue: number,
   maxValue: number
 ): string[] {
-  const melody: string[] = [];
-
-  transactions.forEach((transactionValue) => {
+  return transactions.map((transactionValue) => {
     const normalizedValue = logScale(transactionValue, minValue, maxValue);
     const noteIndex = Math.floor(normalizedValue * (notes.length - 1));
-    melody.push(notes[noteIndex]);
+    return notes[noteIndex];
   });
-
-  return melody;
 }
