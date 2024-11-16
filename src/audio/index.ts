@@ -37,4 +37,33 @@ const playBassline = () => {
   ).start(0);
 
   bassPart.loop = true;
+
+  const kickGain = new Tone.Gain(0.1);
+  const kickEnvelope = new Tone.AmplitudeEnvelope({
+    attack: 0.01,
+    decay: 0.2,
+    sustain: 0,
+  });
+
+  const kick = new Tone.Oscillator("A2")
+    .chain(kickEnvelope, kickGain, Tone.getDestination())
+    .start();
+
+  const kickSnapEnv = new Tone.FrequencyEnvelope({
+    attack: 0.005,
+    decay: 0.01,
+    sustain: 0,
+    baseFrequency: "A2",
+    octaves: 2.7,
+  }).connect(kick.frequency);
+
+  const kickPart = new Tone.Part(
+    (time) => {
+      kickEnvelope.triggerAttack(time);
+      kickSnapEnv.triggerAttack(time);
+    },
+    ["0", "0:0:3", "0:2:0", "0:3:1"]
+  ).start(0);
+
+  kickPart.loop = true;
 };
