@@ -34,7 +34,7 @@ export default function Home() {
           name="eth-address"
         />
         <Button className="px-8" type="submit">
-          Enter
+          Play
         </Button>
       </form>
     </div>
