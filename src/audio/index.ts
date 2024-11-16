@@ -1,9 +1,10 @@
 import * as Tone from "tone";
-import { loadDrums, loadSynth } from "./instruments";
+import { loadDrums, loadSynth, loadSynth2 } from "./instruments";
 
 export const play = async () => {
   await Tone.start();
   const synth = loadSynth();
+  const synth2 = loadSynth2();
   const drums = await loadDrums();
 
   Tone.getTransport().start();
@@ -11,6 +12,8 @@ export const play = async () => {
 
   playBassline();
   playSynth(synth);
+
+  playMelody(synth2);
   playDrumBeat(drums);
 };
 
@@ -138,4 +141,26 @@ const playDrumBeat = (drums) => {
   }, "8n");
 
   loop.start(Tone.Time("8m").toSeconds());
+};
+
+const playMelody = (synth) => {
+  const measure = ["C4", "D4", null, null, "E4", [null, "G4"], "D4", null];
+  console.log(measure);
+
+  const seq = new Tone.Sequence(
+    (time, note) => {
+      if (!note) {
+        return;
+      }
+
+      console.log({ note });
+
+      synth.triggerAttackRelease(note, "16n", time);
+    },
+    measure,
+    "8n"
+  );
+
+  seq.start(Tone.Time("2m").toSeconds());
+  seq.loop = true;
 };

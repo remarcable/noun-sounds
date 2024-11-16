@@ -30,25 +30,25 @@ export default function Home() {
         className="flex gap-2"
         onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
-          const formData = new FormData(e.currentTarget);
-          const ethereumAddress = (
-            formData.get("eth-address") as string
-          ).trim();
+          // const formData = new FormData(e.currentTarget);
+          // const ethereumAddress = (
+          //   formData.get("eth-address") as string
+          // ).trim();
 
-          const nouns = await getNounsByAddress(ethereumAddress);
+          // const nouns = await getNounsByAddress(ethereumAddress);
 
-          if (nouns.length === 0) {
-            toast({
-              title: "No Noun found",
-              description:
-                "Couldn't find a Noun NFT on this address. Please try again.",
-            });
-            setSelectedNoun(null);
-            return;
-          }
+          // if (nouns.length === 0) {
+          //   toast({
+          //     title: "No Noun found",
+          //     description:
+          //       "Couldn't find a Noun NFT on this address. Please try again.",
+          //   });
+          //   setSelectedNoun(null);
+          //   return;
+          // }
 
-          console.log(nouns);
-          setSelectedNoun(nouns[0].id);
+          // console.log(nouns);
+          // setSelectedNoun(nouns[0].id);
 
           play();
         }}
