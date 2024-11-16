@@ -8,7 +8,7 @@ But this isn’t just about music. It’s about expanding what’s possible.
 
 **From Visuals to Sound: Expanding the Noun Identity**
 
-We know the Nouns brand as a visual icon, but with _Noun Sounds_, we take it to a new dimension—one you can hear. By sonifying on-chain data, _Noun Sounds_ creates a connection that’s both artistic and personal.
+We know the [Nouns brand](https://nouns.wtf/) as a visual icon, but with _Noun Sounds_, we take it to a new dimension—one you can hear. By sonifying on-chain data, _Noun Sounds_ creates a connection that’s both artistic and personal.
 
 **Why Audio?**
 
@@ -49,7 +49,7 @@ Notes are mapped to the **C major scale**, providing a familiar and harmonious b
 **Dynamic Backing Tracks:**
 To enhance the experience, a pre-programmed beat adds bass lines and harmonies. The rhythm is crafted around **16th notes**, creating an energetic, funky groove that complements the melody. If a user’s transaction history is limited, the song seamlessly loops, creating an endless and cohesive listening experience.
 
-### Used Tools
+### Tooling
 
 **Audio Generation:**
 The sounds are synthesized and scheduled using **Tone.js**, a powerful Web Audio framework designed for creating interactive music directly in the browser.
