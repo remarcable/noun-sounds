@@ -155,6 +155,15 @@ const playMelody = (synth, txValues) => {
   while (measure.length % 16 !== 0) {
     measure.push(null);
   }
+
+  const index1 = Math.floor(Math.random() * measure.length);
+  measure[index1] = [null, measure[index1]];
+
+  const index2 = Math.floor(Math.random() * measure.length);
+  measure[index2] = [null, measure[index2]];
+
+  const index3 = Math.floor(Math.random() * measure.length);
+  measure[index3] = null;
   // const measure = ["C4", "D4", null, null, "E4", [null, "G4"], "D4", null];
   console.log(measure);
 
