@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getNounsByAddress } from "@/data/getNounsByAddress";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { NounGlasses } from "./nounGlasses";
 import { NounImage } from "@/components/NounImage";
 import { useToast } from "@/hooks/use-toast";
@@ -19,6 +19,56 @@ export default function Home() {
   const [started, setStarted] = useState(false);
   const { toast } = useToast();
 
+  const handleOnSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      setStarted(true);
+
+      const formData = new FormData(e.currentTarget);
+      const ethereumAddress = (formData.get("eth-address") as string).trim();
+
+      const isEns = ethereumAddress.includes(".eth");
+
+      const address = isEns
+        ? await publicClient.getEnsAddress({
+            name: normalize(ethereumAddress),
+          })
+        : ethereumAddress;
+
+      if (address === null) {
+        toast({
+          title: "Couldn't resolve ENS name",
+          description: "Please try again with another address",
+        });
+
+        setStarted(false);
+
+        return;
+      }
+
+      const nouns = await getNounsByAddress(address);
+      const txValues = await getTransactionHistoryValues(address);
+
+      if (nouns.length === 0) {
+        toast({
+          title: "No Noun found",
+          description:
+            "Couldn't find a Noun NFT for this address. Please try again.",
+        });
+        setSelectedNoun(null);
+        setStarted(false);
+        return;
+      }
+
+      console.log({ nouns });
+      setSelectedNoun(nouns[0].id);
+
+      play(txValues, ethereumAddress);
+    },
+    []
+  );
+
   return (
     <div className="flex items-center justify-center flex-col min-h-screen p-8 pb-20 sm:p-20">
       <NounImage nounId={selectedNoun} />
@@ -32,46 +82,7 @@ export default function Home() {
         Listen to your unique transaction history with your Noun
       </div>
 
-      <form
-        className="flex gap-2"
-        onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault();
-
-          setStarted(true);
-
-          const formData = new FormData(e.currentTarget);
-          const ethereumAddress = (
-            formData.get("eth-address") as string
-          ).trim();
-
-          const isEns = ethereumAddress.includes(".eth");
-
-          const address = isEns
-            ? await publicClient.getEnsAddress({
-                name: normalize(ethereumAddress),
-              })
-            : ethereumAddress;
-
-          const nouns = await getNounsByAddress(address);
-          const txValues = await getTransactionHistoryValues(address);
-
-          if (nouns.length === 0) {
-            toast({
-              title: "No Noun found",
-              description:
-                "Couldn't find a Noun NFT on this address. Please try again.",
-            });
-            setSelectedNoun(null);
-            setStarted(false);
-            return;
-          }
-
-          console.log({ nouns });
-          setSelectedNoun(nouns[0].id);
-
-          play(txValues, ethereumAddress);
-        }}
-      >
+      <form className="flex gap-2" onSubmit={handleOnSubmit}>
         <Input
           placeholder="Ethereum Address or ENS"
           className="w-48"
