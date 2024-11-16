@@ -1,7 +1,6 @@
 import * as Tone from "tone";
 
 let polySynth: ReturnType<typeof getPolySynth> | null = null;
-
 export const loadSynth = () => {
   if (!polySynth) {
     polySynth = getPolySynth();
@@ -35,4 +34,39 @@ const getPolySynth = () => {
   }).connect(chorus);
 
   return synth;
+};
+
+let drums: ReturnType<typeof getDrums> | null = null;
+export const loadDrums = () => {
+  if (!drums) {
+    drums = getDrums();
+  }
+
+  return drums;
+};
+
+const getDrums = (): Promise<Tone.Players> => {
+  return new Promise((resolve) => {
+    const drums = new Tone.Players({
+      urls: {
+        kick: "kick.wav",
+        snare: "snare.wav",
+        hihat: "hihat.wav",
+      },
+      baseUrl: "/samples/",
+      volume: -24,
+      fadeOut: "64n",
+      onload: () => {
+        resolve(drums);
+      },
+    });
+
+    const reverb = new Tone.Reverb({
+      decay: 5,
+      preDelay: 0.05,
+      wet: 0.2,
+    });
+
+    drums.chain(reverb, Tone.getDestination());
+  });
 };
