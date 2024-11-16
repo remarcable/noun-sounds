@@ -9,6 +9,8 @@ import { NounImage } from "@/components/NounImage";
 import { useToast } from "@/hooks/use-toast";
 import { play } from "@/audio";
 import { getTransactionHistoryValues } from "@/data/getTransactionHistoryValues";
+import { publicClient } from "@/lib/viemPublicClient";
+import { normalize } from "viem/ens";
 
 export default function Home() {
   const [selectedNoun, setSelectedNoun] = useState<number | null>(null);
@@ -36,8 +38,16 @@ export default function Home() {
             formData.get("eth-address") as string
           ).trim();
 
-          const nouns = await getNounsByAddress(ethereumAddress);
-          const txValues = await getTransactionHistoryValues(ethereumAddress);
+          const isEns = ethereumAddress.includes(".eth");
+
+          const address = isEns
+            ? await publicClient.getEnsAddress({
+                name: normalize(ethereumAddress),
+              })
+            : ethereumAddress;
+
+          const nouns = await getNounsByAddress(address);
+          const txValues = await getTransactionHistoryValues(address);
 
           if (nouns.length === 0) {
             toast({
@@ -55,7 +65,6 @@ export default function Home() {
           play(txValues, ethereumAddress);
         }}
       >
-        {/* TODO: Add ENS support */}
         <Input
           placeholder="Ethereum Address or ENS"
           className="w-48"
