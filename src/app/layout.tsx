@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Londrina_Solid } from "next/font/google";
-import "./globals.css";
+
 import { Toaster } from "@/components/ui/toaster";
+
+import "./globals.css";
 
 const londrina = Londrina_Solid({
   weight: ["400", "900"],
@@ -11,7 +13,7 @@ const londrina = Londrina_Solid({
 
 export const metadata: Metadata = {
   title: "Noun Sounds",
-  description: "Listen to your unique Noun transaction history",
+  description: "Onchain music: Use Nouns to listen to your unique tx history",
 };
 
 export default function RootLayout({

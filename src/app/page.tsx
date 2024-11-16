@@ -74,19 +74,17 @@ export default function Home() {
   );
 
   return (
-    <div className="flex items-center justify-center flex-col min-h-screen p-8 pb-20 sm:p-20">
-      <NounImage nounId={selectedNoun} />
-
-      <div className="flex h-12 mb-4">
-        <h1 className="text-6xl">Noun Sounds</h1>
-        <NounGlasses className="h-36 w-36 items-center justify-center -mt-7 -ml-2" />
+    <div className="flex items-center justify-center flex-col min-h-screen px-8 sm:px-20">
+      <div className="flex mb-4 flex-col-reverse md:flex-row items-center h-fit md:h-12">
+        <h1 className="text-6xl text-center">Noun Sounds</h1>
+        <NounGlasses className="h-36 w-36 items-center justify-center -mb-12 -mt-5 md:-mt-7 md:-ml-2" />
       </div>
 
-      <div className="font-normal text-2xl text-stone-600 mb-8">
-        Listen to your unique transaction history with your Noun
+      <div className="font-normal text-2xl text-stone-600 mb-8 text-center">
+        Onchain music: Use Nouns to listen to your unique tx history
       </div>
 
-      <form className="flex gap-2" onSubmit={handleOnSubmit}>
+      <form className="flex gap-2 mb-8" onSubmit={handleOnSubmit}>
         <Input
           placeholder="Ethereum Address or ENS"
           className="w-48"
@@ -109,6 +107,8 @@ export default function Home() {
           </span>
         </Button>
       </form>
+
+      <NounImage nounId={selectedNoun} />
     </div>
   );
 }
