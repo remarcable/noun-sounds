@@ -22,7 +22,6 @@
     "seed-random": "^2.2.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "tonal": "^6.3.0",
     "tone": "^15.0.4",
     "viem": "^2.21.45"
   },
