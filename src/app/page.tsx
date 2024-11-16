@@ -51,8 +51,10 @@ export default function Home() {
         return;
       }
 
-      const nouns = await getNounsByAddress(address);
-      const txValues = await getTransactionHistoryValues(address);
+      const [nouns, txValues] = await Promise.all([
+        getNounsByAddress(address),
+        getTransactionHistoryValues(address),
+      ]);
 
       if (nouns.length === 0) {
         toast({
