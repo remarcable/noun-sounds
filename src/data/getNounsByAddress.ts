@@ -4,18 +4,22 @@ import { NOUN_SMART_CONTRACT_ADDRESS } from "@/lib/constants";
 
 export const getNounsByAddress = async (address: string) => {
   const response = await fetch(
-    `https://eth.blockscout.com/api/v2/addresses/${address}/nft`
+    `https://eth.blockscout.com/api/v2/addresses/${address}/nft/collections`
   );
-  const { items: nfts } = await response.json();
+  const x = await response.json();
+  const { items } = x;
 
-  if (!nfts) {
+  if (!items) {
     return [];
   }
 
-  const nouns = nfts.filter(
-    // @ts-expect-error Ignore for now
-    (nft) => nft.token.address === NOUN_SMART_CONTRACT_ADDRESS
+  const nouns = items.find(
+    (item) => item?.token?.address === NOUN_SMART_CONTRACT_ADDRESS
   );
 
-  return nouns;
+  if (!nouns) {
+    return [];
+  }
+
+  return nouns.token_instances;
 };
