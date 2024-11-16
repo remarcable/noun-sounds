@@ -7,6 +7,7 @@ import { useState } from "react";
 import { NounGlasses } from "./nounGlasses";
 import { NounImage } from "@/components/NounImage";
 import { useToast } from "@/hooks/use-toast";
+import { play } from "@/audio";
 
 export default function Home() {
   const [selectedNoun, setSelectedNoun] = useState<number | null>(null);
@@ -48,6 +49,8 @@ export default function Home() {
 
           console.log(nouns);
           setSelectedNoun(nouns[0].id);
+
+          play();
         }}
       >
         {/* TODO: Add ENS support */}
