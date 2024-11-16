@@ -1,18 +1,22 @@
 "use client";
+import { useCallback, useState } from "react";
+import { normalize } from "viem/ens";
+import { Loader2Icon } from "lucide-react";
+
+import { publicClient } from "@/lib/viemPublicClient";
+import { cn } from "@/lib/utils";
+
+import { getNounsByAddress } from "@/data/getNounsByAddress";
+import { getTransactionHistoryValues } from "@/data/getTransactionHistoryValues";
+
+import { useToast } from "@/hooks/use-toast";
+
+import { play } from "@/audio";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getNounsByAddress } from "@/data/getNounsByAddress";
-import { useCallback, useState } from "react";
-import { NounGlasses } from "./nounGlasses";
+import { NounGlasses } from "@/components/NounGlasses";
 import { NounImage } from "@/components/NounImage";
-import { useToast } from "@/hooks/use-toast";
-import { play } from "@/audio";
-import { getTransactionHistoryValues } from "@/data/getTransactionHistoryValues";
-import { publicClient } from "@/lib/viemPublicClient";
-import { normalize } from "viem/ens";
-import { Loader2Icon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [selectedNoun, setSelectedNoun] = useState<number | null>(null);
