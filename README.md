@@ -1,12 +1,12 @@
 # [Noun Sounds](https://www.nounsounds.xyz/)
 
-_Noun Sounds_ transforms your Ethereum journey into a symphony, offering a groundbreaking way to explore your blockchain activity. Enter your ENS name or wallet address, and watch as data becomes art—sounds that uniquely tell _your_ story.
+_Noun Sounds_ transforms your Ethereum journey into a symphony, offering a new way to explore your blockchain activity. Enter your ENS name or wallet address, and watch as data becomes art – sounds that uniquely tell _your_ story.
 
 What makes _Noun Sounds_ special is its ability to algorithmically generate audio entirely within your browser. This isn’t just another visual dashboard; it’s a fully synthesized, interactive soundscape that lets you _hear_ your blockchain history.
 
 But this isn’t just about music. It’s about expanding what’s possible.
 
-**From Visuals to Sound: Expanding the Noun Identity**
+**Expanding the Noun Identity**
 
 We know the [Nouns brand](https://nouns.wtf/) as a visual icon, but with _Noun Sounds_, we take it to a new dimension—one you can hear. By sonifying on-chain data, _Noun Sounds_ creates a connection that’s both artistic and personal.
 
@@ -24,7 +24,7 @@ Imagine this:
 
 The result? A rich, dynamic composition where blockchain data becomes an orchestra. _Noun Sounds_ currently only represents transaction values, but aims to incorporate the other dimensions in later versions.
 
-**A Vision for the Future**
+**Future Vision**
 
 Currently, _Noun Sounds_ generates music in real-time, providing a consistent backing track for each Noun. But this is just the beginning. Future iterations will personalize the music even further, creating distinct sounds based on the unique traits of your Nouns. Own multiple Nouns? You’ll get an evolving soundtrack that changes as your collection grows.
 
@@ -43,7 +43,7 @@ At its core, the project checks if your Ethereum address owns a Noun NFT. If it 
 **Mapping Values to Melody:**
 Low-value transactions are represented by low notes, while high-value transactions create higher notes. Through experimentation, I discovered that most transactions tend to cluster at lower values. To capture this subtlety, transaction values are scaled logarithmically, giving greater nuance to the lower spectrum.
 
-**A Musical Framework:**
+**Musical Framework:**
 Notes are mapped to the **C major scale**, providing a familiar and harmonious base for the melodies. A random but repeatable rhythm is generated using a seeded random generator, ensuring that every melody is unique to its Noun while remaining consistent on playback.
 
 **Dynamic Backing Tracks:**
