@@ -1,11 +1,17 @@
 import * as Tone from "tone";
 import { loadDrums, loadSynth, loadSynth2 } from "./instruments";
+import seedRandom from "seed-random";
 
-export const play = async (txValues) => {
+// XXX: Use object with get method to allow for reseeding
+const random = { get: seedRandom("noun sounds") };
+
+export const play = async (txValues, address) => {
   await Tone.start();
   const synth = loadSynth();
   const synth2 = loadSynth2();
   const drums = await loadDrums();
+
+  random.get = seedRandom(address);
 
   Tone.getTransport().start();
   Tone.getTransport().bpm.value = 130;
@@ -152,19 +158,21 @@ const playMelody = (synth, txValues) => {
     10000
   );
 
+  for (let index = 0; index < Math.floor(measure.length / 16); index++) {
+    const index1 = Math.floor(random.get() * measure.length);
+    measure[index1] = [null, measure[index1]];
+
+    const index2 = Math.floor(random.get() * measure.length);
+    measure[index2] = [null, measure[index2]];
+
+    const index3 = Math.floor(random.get() * measure.length);
+    measure[index3] = null;
+  }
+
   while (measure.length % 16 !== 0) {
     measure.push(null);
   }
 
-  const index1 = Math.floor(Math.random() * measure.length);
-  measure[index1] = [null, measure[index1]];
-
-  const index2 = Math.floor(Math.random() * measure.length);
-  measure[index2] = [null, measure[index2]];
-
-  const index3 = Math.floor(Math.random() * measure.length);
-  measure[index3] = null;
-  // const measure = ["C4", "D4", null, null, "E4", [null, "G4"], "D4", null];
   console.log(measure);
 
   const seq = new Tone.Sequence(

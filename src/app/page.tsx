@@ -52,7 +52,7 @@ export default function Home() {
           console.log(nouns);
           setSelectedNoun(nouns[0].id);
 
-          play(txValues);
+          play(txValues, ethereumAddress);
         }}
       >
         {/* TODO: Add ENS support */}
