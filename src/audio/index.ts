@@ -183,7 +183,7 @@ const playMelody = (synth, txValues) => {
 
       console.log({ note });
 
-      synth.triggerAttackRelease(note, "16n", time);
+      synth.triggerAttackRelease(note, "16n", time, between(0.7, 0.9));
     },
     measure,
     "8n"
@@ -192,6 +192,11 @@ const playMelody = (synth, txValues) => {
   seq.start(Tone.Time("2m").toSeconds());
   seq.loop = true;
 };
+
+function between(min: number, max: number) {
+  const range = max - min;
+  return min + random.get() * range;
+}
 
 // Function to normalize using logarithmic scaling
 function logScale(value: number, minValue: number, maxValue: number): number {
