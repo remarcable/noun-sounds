@@ -1,15 +1,17 @@
 import * as Tone from "tone";
-import { loadSynth } from "./instruments";
+import { loadDrums, loadSynth } from "./instruments";
 
 export const play = async () => {
   await Tone.start();
   const synth = loadSynth();
+  const drums = await loadDrums();
 
   Tone.getTransport().start();
   Tone.getTransport().bpm.value = 130;
 
   playBassline();
   playSynth(synth);
+  playDrumBeat(drums);
 };
 
 // TODO: refactor to put instrument in extra file
@@ -112,4 +114,28 @@ const getPosition = () => {
   const offbeat = +offbeatString.split(".")[0];
 
   return { measure, onbeat, offbeat };
+};
+
+const playDrumBeat = (drums) => {
+  const loop = new Tone.Loop((time) => {
+    const { measure, onbeat, offbeat } = getPosition();
+
+    if (offbeat === 0) {
+      drums.player("hihat").start(time, 0, "8n");
+    }
+
+    if (onbeat === 0 && offbeat === 0) {
+      drums.player("kick").start(time, 0, "4n");
+    }
+
+    if (measure % 2 === 1 && onbeat === 1 && offbeat === 2) {
+      drums.player("kick").start(time, 0, "4n");
+    }
+
+    if (onbeat === 2 && offbeat === 0) {
+      drums.player("snare").start(time, 0, "2n");
+    }
+  }, "8n");
+
+  loop.start(Tone.Time("8m").toSeconds());
 };

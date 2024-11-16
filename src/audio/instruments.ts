@@ -54,7 +54,7 @@ const getDrums = (): Promise<Tone.Players> => {
         hihat: "hihat.wav",
       },
       baseUrl: "/samples/",
-      volume: -24,
+      volume: -16,
       fadeOut: "64n",
       onload: () => {
         resolve(drums);
@@ -64,7 +64,7 @@ const getDrums = (): Promise<Tone.Players> => {
     const reverb = new Tone.Reverb({
       decay: 5,
       preDelay: 0.05,
-      wet: 0.2,
+      wet: 0.05,
     });
 
     drums.chain(reverb, Tone.getDestination());
