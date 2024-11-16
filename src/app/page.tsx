@@ -81,7 +81,7 @@ export default function Home() {
       </div>
 
       <div className="font-normal text-2xl text-stone-600 mb-8 text-center">
-        Onchain music: Use Nouns to listen to your unique tx history
+        Convert your tx history to funky onchain music
       </div>
 
       <form className="flex gap-2 mb-8" onSubmit={handleOnSubmit}>
@@ -109,6 +109,10 @@ export default function Home() {
       </form>
 
       <NounImage nounId={selectedNoun} />
+
+      <span className="block text-stone-400 text-lg mt-2 mb-4">
+        Available to Noun holders only
+      </span>
     </div>
   );
 }

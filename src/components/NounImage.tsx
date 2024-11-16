@@ -24,7 +24,7 @@ export const NounImage = ({ nounId }: { nounId: number | null }) => {
         )}
         style={background ? { backgroundColor: background } : {}}
       />
-      <div className="relative mb-8 overflow-hidden rounded-sm w-80 h-80 bg-stone-100 flex items-center justify-center align-center text-6xl text-stone-300 select-none border-2 border-slate-800/20">
+      <div className="relative mb-2 overflow-hidden rounded-sm w-80 h-80 bg-stone-100 flex items-center justify-center align-center text-6xl text-stone-300 select-none border-2 border-slate-800/20">
         {nounId ? (
           <Image
             src={imageUrl}
