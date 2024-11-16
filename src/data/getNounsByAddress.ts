@@ -1,5 +1,3 @@
-"use server";
-
 import { NOUN_SMART_CONTRACT_ADDRESS } from "@/lib/constants";
 
 export const getNounsByAddress = async (address: string) => {
