@@ -1,7 +1,7 @@
 import * as Tone from "tone";
 import { loadDrums, loadSynth, loadSynth2 } from "./instruments";
 
-export const play = async () => {
+export const play = async (txValues) => {
   await Tone.start();
   const synth = loadSynth();
   const synth2 = loadSynth2();
@@ -13,7 +13,7 @@ export const play = async () => {
   playBassline();
   playSynth(synth);
 
-  playMelody(synth2);
+  playMelody(synth2, txValues);
   playDrumBeat(drums);
 };
 
@@ -143,8 +143,19 @@ const playDrumBeat = (drums) => {
   loop.start(Tone.Time("8m").toSeconds());
 };
 
-const playMelody = (synth) => {
-  const measure = ["C4", "D4", null, null, "E4", [null, "G4"], "D4", null];
+const playMelody = (synth, txValues) => {
+  // Divide by 1e16 to get something that is close to dollar values
+  const transactionValues = txValues.map((val) => val / 1e16) || [];
+  const measure = mapTransactionsToMelodyWithLogScaling(
+    transactionValues,
+    0,
+    10000
+  );
+
+  while (measure.length % 16 !== 0) {
+    measure.push(null);
+  }
+  // const measure = ["C4", "D4", null, null, "E4", [null, "G4"], "D4", null];
   console.log(measure);
 
   const seq = new Tone.Sequence(
@@ -164,3 +175,45 @@ const playMelody = (synth) => {
   seq.start(Tone.Time("2m").toSeconds());
   seq.loop = true;
 };
+
+// Function to normalize using logarithmic scaling
+function logScale(value: number, minValue: number, maxValue: number): number {
+  const logMin = Math.log(minValue + 1); // Avoiding log(0)
+  const logMax = Math.log(maxValue + 1);
+  const logValue = Math.log(value + 1); // Avoiding log(0)
+
+  return (logValue - logMin) / (logMax - logMin);
+}
+
+const notes = [
+  "C4",
+  "D4",
+  "E4",
+  "F4",
+  "G4",
+  "A4",
+  "B4",
+  "C5",
+  "D5",
+  "E5",
+  "F5",
+  "G5",
+  "A5",
+  "B5",
+];
+
+export function mapTransactionsToMelodyWithLogScaling(
+  transactions: number[],
+  minValue: number,
+  maxValue: number
+): string[] {
+  const melody: string[] = [];
+
+  transactions.forEach((transactionValue) => {
+    const normalizedValue = logScale(transactionValue, minValue, maxValue);
+    const noteIndex = Math.floor(normalizedValue * (notes.length - 1));
+    melody.push(notes[noteIndex]);
+  });
+
+  return melody;
+}
