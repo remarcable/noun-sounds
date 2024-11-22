@@ -32,7 +32,7 @@ export default function Home() {
       const formData = new FormData(e.currentTarget);
       const ethereumAddress = (formData.get("eth-address") as string).trim();
 
-      const isEns = ethereumAddress.includes(".eth");
+      const isEns = ethereumAddress.includes(".");
 
       const address = isEns
         ? await publicClient.getEnsAddress({
